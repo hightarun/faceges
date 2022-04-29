@@ -2,6 +2,11 @@ import { useState, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
+//redux
+import { connect } from "react-redux";
+
+import Layout from "../../components/Layout";
+
 import Webcam from "react-webcam";
 import styles from "./styles.module.scss";
 
@@ -12,11 +17,19 @@ import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 
-import { Router } from "next/router";
+import { useRouter } from "next/router";
 
-const FaceMask = () => {
+import dynamic from "next/dynamic";
+
+const UserLoadedNoSSR = dynamic(() => import("../../utils/loadUser"), {
+  ssr: false,
+});
+
+const FaceMask = (props) => {
+  const router = useRouter();
   const [result, setResult] = useState("");
   const [prob, setProb] = useState("");
+  const [loadingText, setLoadingText] = useState("");
 
   const webcamRef = useRef(null);
 
@@ -54,17 +67,29 @@ const FaceMask = () => {
     // }
   };
 
+  const moduleLoading = () => {
+    return {
+      __html: loadingText,
+    };
+  };
   const start = async () => {
     await addImagesToDom();
     console.log("IMAGES ADDED IN DOM FOR TRAINING");
+    setLoadingText("IMAGES ADDED IN DOM FOR TRAINING");
     console.log("LOADING MOBILENET MODEL");
+    setLoadingText("LOADING REQUIRED MODELS");
     const model = await mobilenet.load();
     console.log("MOBILENET MODEL LOADED");
+    setLoadingText("MOBILENET MODEL LOADED");
     await tf.ready();
     console.log("TENSOR FLOW READY");
+    setLoadingText("TENSORFLOW READY");
     const knn = knnClassifier.create();
     console.log("KNN Classifier CREATED");
+    setLoadingText("KNN Classifier CREATED");
+    setLoadingText("Starting...");
     const webCamInput = await createWebcamInput();
+    setLoadingText("");
 
     const trainClassifier = async () => {
       // Train using mask images
@@ -113,6 +138,7 @@ const FaceMask = () => {
 
     await trainClassifier();
     await webcamLiveDetection();
+    knn.dispose();
   };
 
   const startHandler = () => {
@@ -124,43 +150,67 @@ const FaceMask = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <meta name="description" content="Live Webcam face mask detection" />
-        <title>Face Mask Detection</title>
-      </Head>
-      <div className={styles.trainImage} id="trainImage"></div>
-      <div className={styles.head}>
-        <p>LIVE MASK DETECTION</p>
-        <Webcam
-          className={styles.webcam}
-          id="webcam"
-          ref={webcamRef}
-          style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            width: 640,
-            height: 480,
-          }}
-        />
-        <div className={styles.output}>
-          {result === "1" ? <p>NO MASK DETECTED</p> : <p>MASK DETECTED</p>}
-          <p className={styles.console}>{prob}</p>
-        </div>
-        <div className={styles.btnContainer}>
-          <div className={styles.btn}>
-            <button onClick={startHandler}>Start</button>
-          </div>
-          <div className={styles.btn}>
-            <button onClick={stopHandler}>Stop</button>
-          </div>
-          <div className={styles.btn}>
-            <a href="/">GO HOME</a>
-          </div>
-        </div>
+    <Layout>
+      <div className={styles.container}>
+        <Head>
+          <meta name="description" content="Live Webcam face mask detection" />
+          <title>Face Mask Detection</title>
+        </Head>
+        {
+          /*props.isAuthenticated && props.userData.userData.isPremium*/ true ? (
+            <div>
+              <div className={styles.trainImage} id="trainImage"></div>
+              <div className={styles.head}>
+                <p>LIVE MASK DETECTION</p>
+                <Webcam
+                  className={styles.webcam}
+                  id="webcam"
+                  ref={webcamRef}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    width: 640,
+                    height: 480,
+                  }}
+                />
+                <div className={styles.output}>
+                  {result === "0" ? (
+                    <p>MASK DETECTED</p>
+                  ) : (
+                    <p>NO MASK DETECTED</p>
+                  )}
+                  <p className={styles.console}>{prob}</p>
+                  <p dangerouslySetInnerHTML={moduleLoading()}></p>
+                </div>
+                <div className={styles.btnContainer}>
+                  <div className={styles.btn}>
+                    <button onClick={startHandler}>Start</button>
+                  </div>
+                  <div className={styles.btn}>
+                    <button onClick={stopHandler}>Stop</button>
+                  </div>
+                  <div className={styles.btn}>
+                    <a href="/">GO HOME</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p>Buy Subscription to use software</p>
+              <span onClick={() => router.push("/subscription")}> BUY</span>
+            </div>
+          )
+        }
       </div>
-    </div>
+    </Layout>
   );
 };
 
-export default FaceMask;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  // user: state.auth.user,
+  userData: state.user,
+});
+
+export default connect(mapStateToProps, null)(FaceMask);

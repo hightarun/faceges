@@ -8,6 +8,13 @@ import styles from "./styles.module.scss";
 import { drawHand } from "../../utils/utilities";
 
 import * as fp from "fingerpose";
+import Layout from "../../components/Layout";
+
+import dynamic from "next/dynamic";
+
+const UserLoadedNoSSR = dynamic(() => import("../../utils/loadUser"), {
+  ssr: false,
+});
 
 function App() {
   const webcamRef = useRef(null);
@@ -82,69 +89,72 @@ function App() {
   };
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <meta name="description" content="Live Webcam Gesture Recognition" />
-        <title>Gesture Recognition</title>
-      </Head>
-      <div className={styles.header}>
-        <p>LIVE GESTURE RECOGNITION</p>
-        <Webcam
-          ref={webcamRef}
-          style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-        {emoji !== null ? (
-          <img
-            src={images[emoji]}
+    <Layout>
+      <div className={styles.container}>
+        <Head>
+          <meta name="description" content="Live Webcam Gesture Recognition" />
+          <title>Gesture Recognition</title>
+        </Head>
+        <UserLoadedNoSSR />
+        <div className={styles.header}>
+          <p>LIVE GESTURE RECOGNITION</p>
+          <Webcam
+            ref={webcamRef}
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480,
+            }}
+          />
+          <canvas
+            ref={canvasRef}
             style={{
               position: "absolute",
               marginLeft: "auto",
               marginRight: "auto",
-              left: 400,
-              bottom: 500,
+              left: 0,
               right: 0,
               textAlign: "center",
-              height: 100,
+              zindex: 9,
+              width: 640,
+              height: 480,
             }}
           />
-        ) : (
-          ""
-        )}
-      </div>
+          {emoji !== null ? (
+            <img
+              src={images[emoji]}
+              style={{
+                position: "absolute",
+                marginLeft: "auto",
+                marginRight: "auto",
+                left: 400,
+                bottom: 500,
+                right: 0,
+                textAlign: "center",
+                height: 100,
+              }}
+            />
+          ) : (
+            ""
+          )}
+        </div>
 
-      <div className={styles.btnContainer}>
-        <div className={styles.btn}>
-          <button onClick={startHandler}>Start</button>
-        </div>
-        <div className={styles.btn}>
-          <button onClick={stopHandler}>Stop</button>
-        </div>
-        <div className={styles.btn}>
-          <a href="/">GO HOME</a>
+        <div className={styles.btnContainer}>
+          <div className={styles.btn}>
+            <button onClick={startHandler}>Start</button>
+          </div>
+          <div className={styles.btn}>
+            <button onClick={stopHandler}>Stop</button>
+          </div>
+          <div className={styles.btn}>
+            <a href="/">GO HOME</a>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 

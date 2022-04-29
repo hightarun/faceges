@@ -166,6 +166,7 @@ const index = (props) => {
             previewImage={previewImage}
             avatarRef={avatarRef}
             name={name}
+            isPremium={props.userData.userData.isPremium}
           />
           <CreatorBody />
         </Fragment>

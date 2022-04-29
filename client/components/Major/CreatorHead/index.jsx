@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./creatorHead.module.scss";
+import Link from "next/link";
 
 //icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +19,7 @@ const index = ({
   previewImage,
   avatarRef,
   name,
-  followers,
+  isPremium,
 }) => {
   return (
     <div className={styles.headContainer}>
@@ -87,6 +88,17 @@ const index = ({
             <div>
               <p>{name}</p>
             </div>
+          </div>
+          <div className={styles.buy}>
+            {!isPremium ? (
+              <Link href="/subscription" passHref={true}>
+                <p>Buy Subscription</p>
+              </Link>
+            ) : (
+              <div>
+                <p>PRO MEMBER</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

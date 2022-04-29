@@ -33,7 +33,7 @@ const uname = (props) => {
       <UserLoadedNoSSR />
       <Head>
         <meta name="description" content="User Profile" />
-        <title>{process.env.site}</title>
+        <title>{process.env.SITE}</title>
       </Head>
       <div className={styles.container}>
         <Profile query={props.props.query} />

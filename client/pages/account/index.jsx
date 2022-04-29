@@ -33,7 +33,7 @@ const index = (props) => {
       <UserLoadedNoSSR />
       <Head>
         <meta name="description" content="Account" />
-        <title>{process.env.site}</title>
+        <title>{process.env.SITE}</title>
       </Head>
     </Layout>
   );

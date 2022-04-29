@@ -25,10 +25,17 @@ const index = () => {
             </i>
           </p>
         </div>
-        <div>
-          <Link href="/facemaskdetector" passHref={true}>
-            <p>Explore</p>
-          </Link>
+        <div className={styles.links}>
+          <div className={styles.btn}>
+            <Link href="/gesture-recognition" passHref={true}>
+              <p>Demo of technology</p>
+            </Link>
+          </div>
+          <div className={styles.btn}>
+            <Link href="/facemaskdetector" passHref={true}>
+              <p>EXPLORE</p>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

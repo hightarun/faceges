@@ -1,5 +1,5 @@
 import Head from "next/head";
-//import styles from "./login.module.scss";
+import styles from "./sub.module.scss";
 import { Fragment } from "react";
 
 import Layout from "../../components/Layout";
@@ -11,17 +11,19 @@ const UserLoadedNoSSR = dynamic(() => import("../../utils/loadUser"), {
   ssr: false,
 });
 
-const login = () => {
+const subscription = () => {
   return (
     <Layout>
       <UserLoadedNoSSR />
       <Head>
-        <meta name="description" content="Login Page" />
+        <meta name="description" content="Subscription" />
         <title>{process.env.SITE}</title>
       </Head>
-      <Login />
+      <div className={styles.container}>
+        <h1>COMMING SOON</h1>
+      </div>
     </Layout>
   );
 };
 
-export default login;
+export default subscription;

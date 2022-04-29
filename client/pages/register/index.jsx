@@ -17,7 +17,7 @@ const register = () => {
       <UserLoadedNoSSR />
       <Head>
         <meta name="description" content="Registration Page" />
-        <title>{process.env.site}</title>
+        <title>{process.env.SITE}</title>
       </Head>
       <SignUp />
     </Layout>
