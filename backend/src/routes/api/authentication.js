@@ -17,7 +17,6 @@ const { checkLogin } = require("../../utils/validationChecks");
 router.get("/", auth, authController.getLogin);
 
 // @route POST /api/auth
-
 router.post("/", checkLogin(), validation, authController.postLogin);
 
 module.exports = router;

@@ -6,15 +6,16 @@ const cors = require("cors");
 const connectDB = require("./src/dbConfig/db");
 
 const app = express();
-
-//helmet for security
-const helmet = require("helmet");
-app.use(helmet());
-app.use("/public", express.static(path.join(__dirname + "/src/public")));
-
 //cors
 const corsOptions = require("./src/utils/corsOptions");
 
+//helmet for security
+const helmet = require("helmet");
+app.use(helmet({ crossOriginResourcePolicy: false }));
+
+app.use("/public", express.static(path.join(__dirname + "/src/public")));
+
+app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 //connecting databse
@@ -29,17 +30,9 @@ app.get("/", (req, res) => {
 });
 
 //routes
-app.use("/api/users", cors(corsOptions), require("./src/routes/api/users"));
-app.use(
-  "/api/auth",
-  cors(corsOptions),
-  require("./src/routes/api/authentication")
-);
-app.use(
-  "/api/confirmation",
-  cors(corsOptions),
-  require("./src/routes/api/confirmation")
-);
+app.use("/api/users", require("./src/routes/api/users"));
+app.use("/api/auth", require("./src/routes/api/authentication"));
+app.use("/api/confirmation", require("./src/routes/api/confirmation"));
 
 const PORT = process.env.PORT;
 

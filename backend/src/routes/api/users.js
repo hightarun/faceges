@@ -9,6 +9,8 @@ app.use(helmet());
 
 const userController = require("../../controllers/userController");
 const validation = require("../../middlewares/validation");
+const auth = require("../../middlewares/auth");
+const dpUpload = require("../../middlewares/dpUpload");
 
 const { checkRegister } = require("../../utils/validationChecks");
 
@@ -17,5 +19,11 @@ router.post("/", checkRegister(), validation, userController.postSignup);
 
 // @route GET /api/users
 router.get("/", userController.getSignup);
+
+// @route Get User data
+router.get("/:username", userController.getUser);
+
+// @route POST user profile pictures
+router.get("/dp", auth, dpUpload, userController.setUserDp);
 
 module.exports = router;

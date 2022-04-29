@@ -15,11 +15,10 @@ module.exports.getLogin = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
-
+// login and send token
 module.exports.postLogin = async (req, res) => {
   //destructring request body
   //const {  emailOrUname, password} = req.body;
-
   try {
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
       String(req.body.emailOrUname).toLowerCase()

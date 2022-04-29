@@ -12,6 +12,7 @@ module.exports.getSignup = (req, res) => {
   return res.status(401).json({ msg: "Not Authorized" });
 };
 
+// Registering new USER
 module.exports.postSignup = async (req, res) => {
   //destructring request body
   //const {  utype, uname ,fName, lName, email, password, phone } = req.body;
@@ -112,6 +113,57 @@ module.exports.postSignup = async (req, res) => {
         );
       }
     );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+// Get info about user
+module.exports.getUser = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "-password -email -phone"
+    );
+    if (!user) {
+      return res.send("No User Found");
+    }
+    return res.send(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+// UPDATE Profile picture of USERS
+module.exports.setUserDp = async (req, res) => {
+  if (req.files.avatar) {
+    let avatarPath = req.files.avatar[0].path;
+    formatedAvatarPath = "/" + avatarPath.replace(/\\/g, "/");
+  }
+  if (req.files.banner) {
+    let bannerPath = req.files.banner[0].path;
+    formatedBannerPath = "/" + bannerPath.replace(/\\/g, "/");
+    profileFields.banner = formatedBannerPath;
+  }
+
+  try {
+    // updating avatar field in User model
+    if (req.files.avatar) {
+      await User.updateOne(
+        { _id: req.user.id },
+        { $set: { avatar: formatedAvatarPath } }
+      );
+    }
+    //upsert to make new if not exists
+    // await Profile.findOneAndUpdate(
+    //   {
+    //     user: req.user.id,
+    //   },
+    //   { $set: profileFields },
+    //   { new: true, upsert: true, setDefaultsOnInsert: true }
+    // );
+    res.send("Image updated successfully");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
