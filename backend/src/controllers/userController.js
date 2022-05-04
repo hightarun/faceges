@@ -144,7 +144,6 @@ module.exports.setUserDp = async (req, res) => {
   if (req.files.banner) {
     let bannerPath = req.files.banner[0].path;
     formatedBannerPath = "/" + bannerPath.replace(/\\/g, "/");
-    profileFields.banner = formatedBannerPath;
   }
 
   try {
@@ -155,14 +154,14 @@ module.exports.setUserDp = async (req, res) => {
         { $set: { avatar: formatedAvatarPath } }
       );
     }
-    //upsert to make new if not exists
-    // await Profile.findOneAndUpdate(
-    //   {
-    //     user: req.user.id,
-    //   },
-    //   { $set: profileFields },
-    //   { new: true, upsert: true, setDefaultsOnInsert: true }
-    // );
+    // updating banner field in User model
+    if (req.files.banner) {
+      await User.updateOne(
+        { _id: req.user.id },
+        { $set: { banner: formatedBannerPath } }
+      );
+    }
+
     res.send("Image updated successfully");
   } catch (err) {
     console.error(err.message);

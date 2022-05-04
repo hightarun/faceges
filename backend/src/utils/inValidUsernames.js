@@ -5,6 +5,8 @@ const inValidUsernames = () => [
   "signin",
   "account",
   "admin",
+  "facemaskdetection",
+  "gesture-recognition",
 ];
 
 module.exports = inValidUsernames;

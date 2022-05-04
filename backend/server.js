@@ -13,7 +13,7 @@ const corsOptions = require("./src/utils/corsOptions");
 const helmet = require("helmet");
 app.use(helmet({ crossOriginResourcePolicy: false }));
 
-app.use("/public", express.static(path.join(__dirname + "/src/public")));
+app.use("/public", express.static(path.join(__dirname + "/public")));
 
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));

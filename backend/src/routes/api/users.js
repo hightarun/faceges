@@ -24,6 +24,6 @@ router.get("/", userController.getSignup);
 router.get("/:username", userController.getUser);
 
 // @route POST user profile pictures
-router.get("/dp", auth, dpUpload, userController.setUserDp);
+router.post("/dp", auth, dpUpload, userController.setUserDp);
 
 module.exports = router;
