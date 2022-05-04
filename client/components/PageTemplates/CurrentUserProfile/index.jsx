@@ -86,7 +86,6 @@ const index = (props) => {
     if (props.userData.userData != "") {
       const bannerSrc = `${process.env.BASE_URL}${props.userData.userData.banner}`;
       const avatarSrc = `${process.env.BASE_URL}${props.userData.userData.avatar}`;
-      console.log(bannerSrc);
       setBanner(bannerSrc);
       setAvatar(avatarSrc);
       const companyName = `${props.userData.userData.companyName}`;

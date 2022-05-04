@@ -28,6 +28,7 @@ export const updateDp = (formData) => async (dispatch) => {
     await axios.post(`${process.env.BASE_URL}/api/users/dp`, formData, config);
     dispatch(setAlert("Image uploaded successfully", "success"));
   } catch (err) {
+    console.log(err);
     dispatch(setAlert("Image update failed", "danger"));
   }
 };
