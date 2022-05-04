@@ -29,9 +29,22 @@ const FaceMask = (props) => {
         {props.isAuthenticated && props.user.isPremium ? (
           <FaceMaskBody />
         ) : (
-          <div>
-            <p>Buy Subscription to use software</p>
-            <span onClick={() => router.push("/subscription")}> BUY</span>
+          <div className={styles.buy}>
+            <div className={styles.wrap}>
+              <div className={styles.txt}>
+                <h1>You don't have subscription</h1>
+                <p>
+                  Buy our one time subscription to access Face Mask Detection
+                  Software on your browser
+                </p>
+              </div>
+              <div
+                className={styles.btn}
+                onClick={() => router.push("/subscription")}
+              >
+                <p>Subscribe</p>
+              </div>
+            </div>
           </div>
         )}
       </div>

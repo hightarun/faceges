@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .wrap {
+    width: 80%;
+    min-height: 50vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $accent2;
+    border-radius: 15px;
+    .txt {
+      padding: 15px;
+    }
+    .btn {
+      min-width: 150px;
+      display: flex;
+      justify-content: center;
+      background-color: $accent1;
+      padding: 1px 10px;
+      color: $dark1;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
+}
+.form {
+  width: 80%;
+  color: black;
+  .card {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    background-color: red;
+  }
+}

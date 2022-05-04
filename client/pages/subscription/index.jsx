@@ -1,9 +1,8 @@
 import Head from "next/head";
 import styles from "./sub.module.scss";
-import { Fragment } from "react";
 
 import Layout from "../../components/Layout";
-import Login from "../../components/pageTemplates/Login";
+import PaymentBody from "../../components/PageTemplates/PaymentBody";
 
 import dynamic from "next/dynamic";
 
@@ -14,13 +13,13 @@ const UserLoadedNoSSR = dynamic(() => import("../../utils/loadUser"), {
 const subscription = () => {
   return (
     <Layout>
-      <UserLoadedNoSSR />
       <Head>
         <meta name="description" content="Subscription" />
         <title>{process.env.SITE}</title>
       </Head>
+      <UserLoadedNoSSR />
       <div className={styles.container}>
-        <h1>COMMING SOON</h1>
+        <PaymentBody />
       </div>
     </Layout>
   );

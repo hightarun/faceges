@@ -8,6 +8,7 @@ const nextConfig = {
   env: {
     BASE_URL: process.env.BASE_URL,
     SITE: process.env.SITE,
+    STRIPE_PKEY: process.env.STRIPE_PKEY,
   },
 
   //for next/image <Image/>
