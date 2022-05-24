@@ -78,11 +78,11 @@ const CheckoutForm = (props) => {
       },
     },
     invalid: {
-      iconColor: "#FFC7EE",
-      color: "#FFC7EE",
+      iconColor: "#FF2000",
+      color: "#FF2000",
     },
     complete: {
-      iconColor: "#cbf4c9",
+      iconColor: "#4BB543",
     },
   };
 
@@ -92,12 +92,20 @@ const CheckoutForm = (props) => {
     hidePostalCode: true,
   };
   return (
-    <form className={styles.form} onSubmit={makePayment}>
-      <CardElement options={cardElementOpts} />
-      <button type="submit" disabled={!stripe || !elements}>
-        Pay
-      </button>
-    </form>
+    <div className={styles.container}>
+      <div className={styles.wrap}>
+        <div className={styles.body}>
+          <p>Buy Faceges one time subscription</p>
+          <p>Rs. 8000</p>
+        </div>
+      </div>
+      <form className={styles.form} onSubmit={makePayment}>
+        <CardElement options={cardElementOpts} />
+        <button type="submit" disabled={!stripe || !elements}>
+          Pay
+        </button>
+      </form>
+    </div>
   );
 };
 

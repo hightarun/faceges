@@ -29,6 +29,11 @@ const noMaskImages = [
   { id: 28, src: "/img/no_mask/28.jpg", alt: "noi" },
   { id: 29, src: "/img/no_mask/29.jpg", alt: "noi" },
   { id: 30, src: "/img/no_mask/30.jpg", alt: "noi" },
+  { id: 31, src: "/img/no_mask/31.jpg", alt: "noi" },
+  { id: 32, src: "/img/no_mask/32.jpg", alt: "noi" },
+  { id: 33, src: "/img/no_mask/33.jpg", alt: "noi" },
+  { id: 34, src: "/img/no_mask/34.jpg", alt: "noi" },
+  { id: 35, src: "/img/no_mask/35.jpg", alt: "noi" },
 ];
 
 export default noMaskImages;

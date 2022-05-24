@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 
 //redux
@@ -18,6 +18,12 @@ const UserLoadedNoSSR = dynamic(() => import("../../utils/loadUser"), {
 
 const FaceMask = (props) => {
   const router = useRouter();
+  // useEffect(() => {
+  //   if (!props.isAuthenticated) {
+  //     router.push("/login");
+  //   }
+  // }, [props.isAuthenticated]);
+
   return (
     <Layout>
       <div className={styles.container}>
