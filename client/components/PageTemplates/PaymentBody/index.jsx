@@ -116,8 +116,10 @@ const index = (props) => {
   useEffect(() => {
     if (props.user != null) {
       if (props.user.isPremium) {
-        router.push(`/account`);
+        router.push("/account");
       }
+    } else {
+      router.push("/account");
     }
   }, [props.user]);
 
